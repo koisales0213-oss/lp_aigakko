@@ -47,7 +47,7 @@
 /* ---------- リセット ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html {
-  scroll-behavior: smooth; scroll-padding-top: 108px;
+  scroll-behavior: smooth; scroll-padding-top: 92px;
   -webkit-text-size-adjust: 100%;
 }
 body {
@@ -114,20 +114,12 @@ strong { font-weight: 700; color: var(--ink); }
 .btn--sm { padding: 11px 22px; font-size: 13.5px; border-radius: 6px; }
 .btn--block { width: 100%; }
 
-/* ---------- ヘッダー（ユーティリティ行＋メイン行） ---------- */
-.header { position: fixed; inset: 0 0 auto 0; z-index: 60; background: #fff; }
-.header.is-scrolled { box-shadow: 0 1px 12px rgba(16,21,28,.08); }
-
-/* 電話番号・営業時間・パートナー向けリンクを右上にコンパクト配置 */
-.utility { border-bottom: 1px solid var(--line-soft); background: #fff; }
-.utility__inner {
-  width: min(100% - 40px, var(--wrap)); margin-inline: auto;
-  height: 36px; display: flex; align-items: center; justify-content: flex-end; gap: 22px;
+/* ---------- ヘッダー ---------- */
+.header {
+  position: fixed; inset: 0 0 auto 0; z-index: 60; background: #fff;
+  border-bottom: 1px solid var(--line-soft);
 }
-.utility__item { font-size: 12px; color: var(--ink-mute); display: flex; align-items: center; gap: 6px; }
-.utility__item b { color: var(--ink); font-weight: 800; letter-spacing: .02em; }
-.utility__link { font-size: 12px; color: var(--ink-mute); text-decoration: none; }
-.utility__link:hover { color: var(--red); }
+.header.is-scrolled { box-shadow: 0 1px 12px rgba(16,21,28,.08); }
 
 .header__inner {
   width: min(100% - 40px, var(--wrap)); margin-inline: auto;
@@ -148,7 +140,7 @@ strong { font-weight: 700; color: var(--ink); }
 .gnav a:hover { color: var(--red); }
 
 /* ---------- ヒーロー（白背景・大きな太字見出し・実績数字） ---------- */
-.hero { padding: 160px 0 0; background: #fff; position: relative; overflow: hidden; }
+.hero { padding: 132px 0 0; background: #fff; position: relative; overflow: hidden; }
 .hero::before {
   content: ""; position: absolute; right: -200px; top: -140px;
   width: 640px; height: 640px; border-radius: 50%;
@@ -656,11 +648,10 @@ select.form__input { appearance: none; }
   html { scroll-padding-top: 76px; }
   .sp { display: inline; }
 
-  .utility { display: none; }
   .header__inner { height: 60px; }
   .header__cta { display: none; }
 
-  .hero { padding: 104px 0 0; }
+  .hero { padding: 96px 0 0; }
   .hero::before { display: none; }
   .hero__cta { flex-direction: column; align-items: stretch; }
   .hero__stats { grid-template-columns: 1fr; margin-top: 40px; }
