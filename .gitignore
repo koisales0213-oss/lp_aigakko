@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# エディタ
+.vscode/
+.idea/
+*.swp
+
+# 依存関係 / ビルド成果物
+node_modules/
+dist/
+build/
+
+# ログ・環境変数
+*.log
+.env
+.env.local
+
+# マスキング前の元素材（個人の連絡先を含むためコミット禁止）
+# 原本はすべて _private/ に置くこと。公開用は assets/img/ 配下のマスキング済みのみ
+/_private/
+
+# ルート直下に画像を置かない（原本の置き忘れ対策）
+/*.png
+/*.jpg
+/*.jpeg
+
