@@ -28,32 +28,40 @@
   onScroll();
 
   /* ============================================================
-     演出2：便箋が三つ折りから開く
+     演出2：01→02→03 のフローと連動した写真の切り替え
      発火は IntersectionObserver のみ。scroll イベントは使わない。
      rootMargin: "-45% 0px -45% 0px" でビューポート中央にあるブロックを
-     検出し、対応する .st-N をステージに付け替える。
+     検出し、対応する写真に .is-on を付け替える。
      ============================================================ */
-  var foldStage = document.getElementById('foldStage');
-  var foldSteps = document.querySelectorAll('.fold-step');
+  var flowStage = document.getElementById('flowStage');
+  var flowSteps = document.querySelectorAll('.fold-step');
 
-  if (foldStage && foldSteps.length && 'IntersectionObserver' in window) {
-    var setFoldState = function (state, activeEl) {
-      foldStage.classList.remove('st-1', 'st-2', 'st-3');
-      foldStage.classList.add(state);
-      Array.prototype.forEach.call(foldSteps, function (el) {
+  if (flowStage && flowSteps.length) {
+    var flowImgs = flowStage.querySelectorAll('.flow-img');
+
+    var setFlowState = function (state, activeEl) {
+      Array.prototype.forEach.call(flowImgs, function (img) {
+        img.classList.toggle('is-on', img.getAttribute('data-state') === state);
+      });
+      Array.prototype.forEach.call(flowSteps, function (el) {
         el.classList.toggle('is-active', el === activeEl);
       });
     };
 
-    var foldIo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var state = entry.target.getAttribute('data-state');
-        if (state) setFoldState(state, entry.target);
-      });
-    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    // 初期表示は 01
+    setFlowState('st-1', flowSteps[0]);
 
-    Array.prototype.forEach.call(foldSteps, function (el) { foldIo.observe(el); });
+    if ('IntersectionObserver' in window) {
+      var flowIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var state = entry.target.getAttribute('data-state');
+          if (state) setFlowState(state, entry.target);
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+      Array.prototype.forEach.call(flowSteps, function (el) { flowIo.observe(el); });
+    }
   }
 
   /* ---------- スクロールで要素をふわっと表示 ---------- */

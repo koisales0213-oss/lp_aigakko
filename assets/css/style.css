@@ -257,66 +257,25 @@ strong { font-weight: 700; color: var(--ink); }
 .envelope__body { font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink-mute); line-height: 1.9; }
 
 /* ============================================================
-   演出2：便箋が三つ折りから開く
-   ・パネルは場所を占めたまま。動かすのは transform と opacity のみ
-   ・高さはアニメーションさせない（レイアウトが動くため）
+   演出2：01→02→03 のフローと連動した写真の切り替え
+   ・3枚を重ねて置き、opacity と transform だけで切り替える
+   ・高さは動かさないのでレイアウトは動かない
    ・遷移は 420ms / cubic-bezier(0.16, 1, 0.3, 1)
    ============================================================ */
 .fold-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.fold-stage { position: sticky; top: 132px; }
+.flow-stage { position: sticky; top: 132px; }
 
-.fold {
-  position: relative;
-  aspect-ratio: 210 / 297;          /* 紙の縦横比（A4） */
-  perspective: 1600px;
-  max-width: 420px; margin-inline: auto;
-  container-type: inline-size;      /* 便箋の幅に比例して本文サイズを決める */
+.flow-frame {
+  position: relative; aspect-ratio: 3 / 2; overflow: hidden;
+  border-radius: var(--radius-lg); background: #0f1319; box-shadow: var(--shadow-lg);
 }
-.fold__panel {
-  position: absolute; left: 0; right: 0;
-  height: 33.34%; overflow: hidden;
-  backface-visibility: hidden;
-  transition: transform .42s var(--ease-out-q);
-}
-.fold__panel--top { top: 0;       transform-origin: bottom center; }
-.fold__panel--mid { top: 33.33%; }
-.fold__panel--bot { top: 66.66%;  transform-origin: top center; }
-
-/* 各パネルの中に同じ面を1枚ずつ置き、top をずらして上中下を出す */
-.fold__face {
-  position: absolute; left: 0; width: 100%; height: 300%;
-  background: linear-gradient(180deg, #fffdf8 0%, #fdfaf2 100%);
-  box-shadow: inset 0 0 0 1px #ece4d6;
-}
-.fold__panel--top .fold__face { top: 0; }
-.fold__panel--mid .fold__face { top: -100%; }
-.fold__panel--bot .fold__face { top: -200%; }
-
-/* 便箋の本文は画像に焼かず、HTMLで面に重ねる */
-.fold__sheet { padding: 7cqw 8cqw; }
-.fold__to   { font-size: 3.1cqw; color: var(--ink); line-height: 1.7; margin-bottom: 4cqw; }
-.fold__head {
-  font-size: 3.7cqw; font-weight: 800; color: var(--ink); line-height: 1.55;
-  padding-bottom: 2.4cqw; border-bottom: 1px solid #e3dac9; margin-bottom: 3.4cqw;
-}
-.fold__p { font-size: 2.9cqw; color: #5b6068; line-height: 2.15; margin-bottom: 2.2cqw; }
-.fold__sign { font-size: 2.9cqw; color: var(--ink); text-align: right; margin-top: 3cqw; }
-
-/* 状態：クラスの付け替えだけで3状態を切り替える（中間状態は作らない） */
-.fold.st-1 .fold__panel--top { transform: rotateX(-90deg); }
-.fold.st-1 .fold__panel--bot { transform: rotateX(90deg); }
-.fold.st-2 .fold__panel--top,
-.fold.st-3 .fold__panel--top { transform: rotateX(0deg); }
-.fold.st-2 .fold__panel--bot,
-.fold.st-3 .fold__panel--bot { transform: rotateX(0deg); }
-
-/* 朱の印 */
-.fold__seal {
-  position: absolute; right: 9%; bottom: 11%; width: 21%; z-index: 3;
-  opacity: 0; transform: scale(1.3); transform-origin: center;
+.flow-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transform: scale(1.03);
   transition: opacity .42s var(--ease-out-q), transform .42s var(--ease-out-q);
 }
-.fold.st-3 .fold__seal { opacity: 1; transform: scale(1); }
+.flow-img.is-on { opacity: 1; transform: scale(1); }
+.flow-note { font-size: 11.5px; color: var(--ink-mute); margin-top: 12px; text-align: right; }
 
 /* 読み物側 */
 .fold-steps { display: grid; gap: 26px; }
@@ -329,6 +288,8 @@ strong { font-weight: 700; color: var(--ink); }
 .fold-step__no { font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--red); margin-bottom: 8px; }
 .fold-step__ttl { font-size: clamp(17px, 2.1vw, 21px); font-weight: 800; color: var(--ink); line-height: 1.6; margin-bottom: 12px; }
 .fold-step__txt { font-size: 14.5px; line-height: 2.1; }
+/* 各ブロック内の写真はモバイルのみ表示 */
+.fold-step__img { display: none; }
 
 /* ---------- お悩み（アイコン付きカード） ---------- */
 .worry { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -642,12 +603,17 @@ select.form__input { appearance: none; }
   .feature__grid { grid-template-columns: 140px 1fr; gap: 28px; }
 }
 
-/* 演出2：モバイルは sticky 2カラムを無理に再現せず、縦に積む */
+/* 演出2：モバイルは sticky 2カラムを再現せず、縦に積む。
+   ステージは隠し、各ブロックの上に対応する写真を静的に置く。 */
 @media (max-width: 1023px) {
-  .fold-layout { grid-template-columns: 1fr; gap: 40px; }
-  .fold-stage { position: static; }
-  .fold { max-width: 340px; }
-  .fold-step { opacity: 1; }
+  .fold-layout { grid-template-columns: 1fr; gap: 0; }
+  .flow-stage { display: none; }
+  .fold-steps { gap: 40px; }
+  .fold-step { opacity: 1; border-left: 0; padding: 0; }
+  .fold-step__img {
+    display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover;
+    border-radius: var(--radius-lg); margin-bottom: 20px; box-shadow: var(--shadow);
+  }
 }
 
 @media (max-width: 720px) {
@@ -706,12 +672,10 @@ select.form__input { appearance: none; }
   .envelope { animation: none; opacity: 1; transform: none; }
   .envelope__letter { animation: none; transform: translateY(16%); }
 
-  /* 演出2：開いて印が押された最終状態 */
-  .fold__panel { transition: none; }
-  .fold.st-1 .fold__panel--top,
-  .fold.st-1 .fold__panel--bot { transform: rotateX(0deg); }
-  .fold__seal { transition: none; opacity: 1; transform: scale(1); }
-  .fold-step { opacity: 1; }
+  /* 演出2：切り替えは残すが、フェード・拡大は行わず即座に差し替える */
+  .flow-img { transition: none; transform: none; }
+  .flow-img.is-on { transform: none; }
+  .fold-step { opacity: 1; transition: none; }
 }
 
 /* ---------- 印刷 ---------- */

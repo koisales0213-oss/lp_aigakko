@@ -277,102 +277,57 @@
 </section>
 
 <!-- ============================================================
-     演出2：便箋が三つ折りから開く
+     演出2：01→02→03 のフローと連動した写真の切り替え
      ------------------------------------------------------------
-     ・パネル3枚を上下 rotateX で折る。高さは動かさず transform / opacity のみ。
-     ・折りたたんでもパネルは場所を占めたままなので、レイアウトは動かない。
-     ・発火は IntersectionObserver のみ（scroll イベントは使わない）。
-     ・状態は .st-1 / .st-2 / .st-3 の付け替えだけ。中間状態は作らない。
-     ------------------------------------------------------------
-     【便箋を写真に差し替える場合の注意】
-     折り目は「紙の」1/3であって「画像の」1/3ではありません。
-     背景の余白が残っていると、画像を等分しても折り目とズレます。
-     写真は必ず紙の範囲でトリミング（背景を落としたうえで数px内側も削る）してから
-     .fold__face の背景に入れてください。数px残った背景色は、折ったときに
-     黒い縁として見えます。現状は写真がないため、便箋の面をCSSで描いています
-     （余白がないので折り目は正確に1/3に来ます）。
-     img で差し替える場合は width:100% / height:300% / object-fit:cover とし、
-     top を 0 / -100% / -200% にずらしてください（fill ではなく cover）。
-     <picture> を使うなら picture{display:contents} を必ず指定すること。
-     picture と img の両方に height:300% を書くと入れ子で900%になり折り目が合いません。
+     ・発火は IntersectionObserver のみ（scroll イベントは使わない）
+     ・rootMargin: "-45% 0px -45% 0px" でビューポート中央のブロックを検出し、
+       対応する .st-N をステージに付け替える。中間状態は作らない
+     ・動かすのは transform と opacity のみ。高さは動かさない
+       （3枚を重ねて置いているので、切り替えでレイアウトは動かない）
+     ・遷移は 420ms / cubic-bezier(0.16, 1, 0.3, 1)
+     ・モバイルは sticky 2カラムを再現せず、各ブロックの上に対応する写真を静的に置く
      ============================================================ -->
 <section class="section" id="letter">
   <div class="wrap">
     <div class="sec-head sec-head--center">
       <p class="sec-label">LETTER</p>
-      <h2 class="sec-title">その手紙は、こう開かれる。</h2>
-      <p class="sec-lead">秘書の手で三つ折りが開かれ、社長の机に届くまで。</p>
+      <h2 class="sec-title">その手紙は、こう読まれる。</h2>
+      <p class="sec-lead">秘書の手で開かれ、社長が読み、決裁者に渡るまで。</p>
     </div>
 
     <div class="fold-layout">
-      <div class="fold-stage">
-        <!-- 初期状態は三つ折り。JSが .st-1 / .st-2 / .st-3 を付け替える -->
-        <div class="fold st-1" id="foldStage">
-          <div class="fold__panel fold__panel--top">
-            <div class="fold__face">
-              <div class="fold__sheet">
-                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
-                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
-                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
-                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
-                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
-                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
-                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
-              </div>
-            </div>
-          </div>
-          <div class="fold__panel fold__panel--mid">
-            <div class="fold__face">
-              <div class="fold__sheet">
-                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
-                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
-                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
-                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
-                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
-                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
-                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
-              </div>
-            </div>
-          </div>
-          <div class="fold__panel fold__panel--bot">
-            <div class="fold__face">
-              <div class="fold__sheet">
-                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
-                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
-                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
-                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
-                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
-                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
-                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 朱の印：border-radius ではなく SVG の circle で描く -->
-          <svg class="fold__seal" viewBox="0 0 100 100" aria-hidden="true">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#c8102e" stroke-width="6"/>
-            <text x="50" y="42" text-anchor="middle" fill="#c8102e"
-                  font-size="30" font-weight="700" font-family="serif">かざ</text>
-            <text x="50" y="76" text-anchor="middle" fill="#c8102e"
-                  font-size="30" font-weight="700" font-family="serif">あな</text>
-          </svg>
+      <div class="flow-stage">
+        <div class="flow-frame st-1" id="flowStage">
+          <img class="flow-img" data-state="st-1" src="assets/img/flow-01.jpg"
+               width="1200" height="800" loading="lazy"
+               alt="オフィスで秘書が三つ折りの手紙を開いて読んでいる様子">
+          <img class="flow-img" data-state="st-2" src="assets/img/flow-02.jpg"
+               width="1200" height="800" loading="lazy"
+               alt="社長室で社長が手紙を読んでいる様子。見出しに中期経営計画の施策名が入っている">
+          <img class="flow-img" data-state="st-3" src="assets/img/flow-03.jpg"
+               width="1200" height="800" loading="lazy"
+               alt="社長が手紙を役員に手渡し、指示を出している様子">
         </div>
+        <p class="flow-note">※ 写真はイメージです。</p>
       </div>
 
       <ol class="fold-steps">
         <li class="fold-step" data-state="st-1">
+          <img class="fold-step__img" src="assets/img/flow-01.jpg" width="1200" height="800" loading="lazy" alt="">
           <p class="fold-step__no">01</p>
           <h3 class="fold-step__ttl">三つ折りのまま、秘書の手に届く</h3>
-          <p class="fold-step__txt">和紙に印刷したA4を三つ折りにして封入。宛名は担当者ではなく社長・役員宛。まず秘書室で開封され、社長に上げるべき手紙かどうかが判断されます。</p>
+          <p class="fold-step__txt">和紙に印刷したA4を三つ折りにして封入。宛名は担当者ではなく社長・役員宛。まず秘書室で開封され、社長に上げるべき手紙かどうかが判断されます。ここを越えられない郵送DMがほとんどです。</p>
         </li>
         <li class="fold-step" data-state="st-2">
+          <img class="fold-step__img" src="assets/img/flow-02.jpg" width="1200" height="800" loading="lazy" alt="">
           <p class="fold-step__no">02</p>
           <h3 class="fold-step__ttl">開いた瞬間に、自社の話だと分かる</h3>
           <p class="fold-step__txt">見出しに入るのは、先方の中期経営計画にある施策名そのもの。「よその会社にも送っている手紙」ではないことが、一行目で伝わります。ここが読まれるかどうかの分かれ目です。</p>
         </li>
         <li class="fold-step" data-state="st-3">
+          <img class="fold-step__img" src="assets/img/flow-03.jpg" width="1200" height="800" loading="lazy" alt="">
           <p class="fold-step__no">03</p>
-          <h3 class="fold-step__ttl">社長の机に上がり、指示が出る</h3>
+          <h3 class="fold-step__ttl">社長から、決裁者へ渡る</h3>
           <p class="fold-step__txt">社長宛に届いた手紙は社内で回り、担当部門へ指示が降ります。数日後、手紙に記した代表アドレスに、本部長・部長クラスから返信が届きます。</p>
         </li>
       </ol>
