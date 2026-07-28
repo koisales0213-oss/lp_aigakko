@@ -108,6 +108,32 @@
     });
   });
 
+  /* ============================================================
+     メディア掲載：クリックされて初めて YouTube を読み込む
+     ページ表示時点では外部リクエストを発生させない。
+     JSが動かない場合はリンクとして YouTube を開く（既定の挙動）。
+     ============================================================ */
+  var facade = document.getElementById('videoFacade');
+  if (facade) {
+    facade.addEventListener('click', function (e) {
+      var id = facade.getAttribute('data-video-id');
+      if (!id) return;                       // IDが無ければ通常のリンクとして動かす
+      e.preventDefault();
+
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      iframe.title = '令和の虎｜かざあな隊 出演回';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+
+      facade.innerHTML = '';
+      facade.appendChild(iframe);
+      facade.removeAttribute('href');
+      facade.removeAttribute('data-video-id');
+    });
+  }
+
   /* ---------- お問い合わせフォーム ---------- */
   var form = document.getElementById('contactForm');
   if (!form) return;
