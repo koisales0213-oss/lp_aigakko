@@ -15,11 +15,10 @@
 
 ## 現在のステータス
 
-**⚠️ 公開停止中。** 素材原本の誤コミット事故のため、リポジトリを Private 化して LP を一時停止しています。
-リポジトリの削除・再作成が完了したら、再公開します（手順は下記「再公開の手順」）。
+**LP を GitHub Pages で公開中。** 事例セクション（実物の手紙・返信、匿名化済み）を掲載済み。
+フォーム送信先・法人情報が未対応。
 
-- 公開予定URL： https://koisales0213-oss.github.io/lp_aigakko/
-- LP には事例セクション（実物の手紙・返信、匿名化済み）を追加済み
+🔗 公開URL： https://koisales0213-oss.github.io/lp_aigakko/
 
 ---
 
@@ -62,7 +61,8 @@
   - 履歴を作り直して該当ファイルを除去
   - 原本を `_private/` に隔離、`.gitignore` に `/_private/` とルート直下の画像除外を追加
   - リポジトリを Private 化し、Pages を停止
-  - force push ではダングリングオブジェクトが残るため、**リポジトリの削除・再作成が必要**
+  - force push ではダングリングオブジェクトが残るため、**リポジトリを削除して同名で作り直した**
+  - 3経路（Pages / raw の main / raw の旧コミットSHA）すべてで 404 になることを確認済み
 - 再発防止ルールは `docs/LP設計メモ.md` の「4-2. 素材の取り扱いルール」に記載
 
 ### 2026-07-28 — 事例セクションを追加（匿名化）
@@ -72,24 +72,12 @@
 - 役職「代表取締役会長 兼 社長CEO」は残した（社長宛に送った事実が訴求の核のため）
 - 許諾が取れたら `_private/` の原本から実名版を作り直して差し替える
 
----
+### 2026-07-28 — リポジトリを作り直して再公開
 
-## 再公開の手順
-
-1. リポジトリを削除（要 `delete_repo` 権限）
-   ```bash
-   gh auth refresh -h github.com -s delete_repo   # ブラウザ認証が必要
-   gh repo delete koisales0213-oss/lp_aigakko --yes
-   ```
-2. 同名で再作成し、クリーンな履歴を push
-   ```bash
-   cd ~/Desktop/LP制作_AIの学校演習
-   gh repo create koisales0213-oss/lp_aigakko --public --source=. --push
-   ```
-3. GitHub Pages を有効化
-   ```bash
-   gh api -X POST repos/koisales0213-oss/lp_aigakko/pages -f 'source[branch]=main' -f 'source[path]=/'
-   ```
+- リポジトリを削除し、同名で再作成してクリーンな履歴を push
+- GitHub Pages を再有効化し、ビルド完了・全ファイル配信を確認
+- 旧原本が 3経路すべてで 404 になることを確認
+- 公開URL は元のまま： https://koisales0213-oss.github.io/lp_aigakko/
 
 
 ### 2026-07-28 — 環境セットアップ
