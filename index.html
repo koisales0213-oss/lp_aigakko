@@ -14,266 +14,490 @@
 </head>
 <body>
 
-<!-- ============ ヘッダー ============ -->
+<!-- ============================================================
+     ヘッダー
+     参考サイトを踏襲：電話番号・営業時間・パートナー向けリンクを
+     右上にコンパクトなユーティリティ行として置き、その下にメイン行。
+     ============================================================ -->
 <header class="header" id="header">
+  <!-- TODO: 電話番号・受付時間・パートナー向けページのURLを実際の値に差し替えてください -->
+  <div class="utility">
+    <div class="utility__inner">
+      <span class="utility__item">お電話でのご相談 <b>00-0000-0000</b></span>
+      <span class="utility__item">受付時間 <b>平日 10:00–18:00</b></span>
+      <a class="utility__link" href="#contact">パートナー・代理店の方はこちら</a>
+    </div>
+  </div>
   <div class="header__inner">
     <a class="logo" href="#top">
       <span class="logo__mark" aria-hidden="true">風</span>
       <span class="logo__text">かざあな隊<em>大手飲食チェーン開拓</em></span>
     </a>
     <nav class="gnav" aria-label="グローバルナビゲーション">
-      <a href="#problem">課題</a>
-      <a href="#method">手法</a>
+      <a href="#worry">お悩み</a>
+      <a href="#feature">特長</a>
       <a href="#case">事例</a>
       <a href="#price">料金</a>
+      <a href="#flow">流れ</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn--sm btn--primary header__cta" href="#contact">無料相談する</a>
+    <a class="btn btn--primary btn--sm header__cta" href="#contact">無料相談・資料請求</a>
   </div>
 </header>
 
 <main id="top">
 
-<!-- ============ ヒーロー ============ -->
+<!-- ============================================================
+     ファーストビュー
+     参考サイトを踏襲：白背景／2〜3行の大きな太字キャッチ／
+     サブテキストで概要／赤いCTA／下部に実績数字を横並びで目立たせる。
+     ※ 数字は当社が実際に持っている値のみを掲載（創作しない）
+     ============================================================ -->
 <section class="hero">
-  <div class="hero__bg" aria-hidden="true"></div>
   <div class="wrap hero__inner">
-    <p class="hero__eyebrow">大手飲食チェーン本部 <span>／</span> 新規開拓特化</p>
-    <h1 class="hero__title">
-      <span class="line">店舗でも、展示会でもなく。</span>
-      <span class="line line--accent">チェーン本部の社長から、</span>
-      <span class="line">商談を降ろす。</span>
-    </h1>
-    <p class="hero__lead">
-      大手飲食チェーンは、店舗や現場担当からいくら評価されても、本部の稟議には上がりません。<br>
-      かざあな隊は、<strong>中期経営計画を1社ずつ読み込んだ手紙</strong>を社長・役員宛に届け、<strong>秘書室への追電</strong>で商談化する。<br>
-      「大手の扉を開ける」ことだけに特化した会社です。
-    </p>
+    <div class="hero__cols">
+      <div class="hero__body">
+        <p class="hero__tag">大手飲食チェーン本部 ／ 新規開拓特化</p>
+        <!-- 見出しは1行ずつマスクして下から出す（行マスク：translateY(115%) → 0） -->
+        <h1 class="hero__title">
+          <span class="mask"><span class="line" style="--d:1.15s">店舗でも、展示会でもなく。</span></span>
+          <span class="mask"><span class="line" style="--d:1.28s">チェーン本部の<span class="em">社長</span>から、</span></span>
+          <span class="mask"><span class="line" style="--d:1.41s">商談を降ろす。</span></span>
+        </h1>
+        <p class="hero__lead" style="--d:1.65s">
+          大手飲食チェーンは、店舗や現場担当からいくら評価されても、本部の稟議には上がりません。<br>
+          かざあな隊は、<strong>中期経営計画を1社ずつ読み込んだ手紙</strong>を社長・役員宛に届け、<strong>秘書室への追電</strong>で商談化する。
+          「大手の扉を開ける」ことだけに特化した会社です。
+        </p>
 
-    <ul class="hero__points">
-      <li><span class="num">01</span>中計はめ込み型のカスタム手紙</li>
-      <li><span class="num">02</span>受付ではなく「秘書室」を攻略</li>
-      <li><span class="num">03</span>社長の指示で決裁者が出てくる</li>
-    </ul>
+        <div class="hero__cta" style="--d:1.85s">
+          <a class="btn btn--primary btn--lg" href="#contact">まずは無料相談する</a>
+          <a class="btn btn--outline btn--lg" href="#feature">サービスの特長を見る</a>
+        </div>
+        <p class="hero__note" style="--d:1.95s">相談は無料です。商材の相性が合わないと判断した場合は、その場で正直にお伝えします。</p>
+      </div>
 
-    <div class="hero__cta">
-      <a class="btn btn--primary btn--lg" href="#contact">無料相談を申し込む</a>
-      <a class="btn btn--ghost btn--lg" href="#method">まず手法を見る</a>
+      <!-- ========================================================
+           演出1：封筒からの開封（ロード直後に自動再生・JSは使わない）
+           封筒の開／閉の2枚が同一アングルで用意できないため、指示の
+           フォールバック方針に従い「便箋が引き出される」動きを主役にする。
+           口の位置に overflow:hidden の枠を置き、その中で便箋を
+           translateY(96%) → translateY(16%) と動かしてクリップする。
+           ======================================================== -->
+      <div class="hero__visual" aria-hidden="true">
+        <div class="envelope">
+          <img class="envelope__img" src="assets/img/hero-envelope.jpg" width="900" height="474" alt="">
+          <!-- 便箋が出てくる枠。封筒の口より下はここでクリップされる -->
+          <div class="envelope__slot">
+            <div class="envelope__letter">
+              <p class="envelope__ttl">御社の中期経営計画、<br>拝読しました。</p>
+              <span class="envelope__rule"></span>
+              <p class="envelope__body">貴社が掲げる省人化と店舗DXの推進について——</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <p class="hero__note">相談は無料です。商材の相性が合わないと判断した場合は、その場で正直にお伝えします。</p>
+    <div class="hero__stats">
+      <div class="hstat">
+        <p class="hstat__num">10<span class="u">社に1社</span></p>
+        <p class="hstat__label">アポ獲得の基準値</p>
+        <p class="hstat__note">大手向け商材における当社の基準値。保証ではありません。</p>
+      </div>
+      <div class="hstat">
+        <p class="hstat__num">約4<span class="u">割</span></p>
+        <p class="hstat__label">追電で秘書室に繋がる割合</p>
+        <p class="hstat__note">手紙の到着確認という事務連絡の形で架電した場合の目安。</p>
+      </div>
+      <div class="hstat">
+        <p class="hstat__num">役員<span class="u">クラス</span></p>
+        <p class="hstat__label">商談相手のレイヤー</p>
+        <p class="hstat__note">社長宛に送るため、本部長・部長・執行役員から返信が届きます。</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ============ 課題 ============ -->
-<section class="section section--paper" id="problem">
+<!-- ============================================================
+     お悩みセクション
+     参考サイトを踏襲：「こんなお悩みはありませんか？」形式＋
+     アイコン付きカードで課題を並べる。薄いグレー背景で区切る。
+     ============================================================ -->
+<section class="section section--alt" id="worry">
   <div class="wrap">
-    <p class="sec-label">Problem</p>
-    <h2 class="sec-title">飲食チェーン開拓、<br class="sp">こんな壁で止まっていませんか。</h2>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">PROBLEM</p>
+      <h2 class="sec-title">こんなお悩みは<br class="sp">ありませんか？</h2>
+      <p class="sec-lead">大手飲食チェーンの開拓でつまずくポイントは、だいたい次の3つに集約されます。</p>
+    </div>
 
-    <div class="cards cards--3">
-      <div class="card card--problem">
-        <p class="card__ttl">店舗には刺さるのに、<br>本部に上がらない</p>
-        <p class="card__txt">店長も現場も「いいですね」と言ってくれる。けれど本部の商品部・購買部まで話が届かず、テスト導入の稟議が起票されないまま終わる。</p>
+    <div class="worry">
+      <div class="worry__item">
+        <div class="worry__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21V8l6-4 6 4v13"/><path d="M15 21V11l6 4v6"/><path d="M7 13h2M7 17h2"/>
+          </svg>
+        </div>
+        <h3 class="worry__ttl">店舗には刺さるのに、<br>本部に上がらない</h3>
+        <p class="worry__txt">店長も現場も「いいですね」と言ってくれる。けれど本部の商品部・購買部まで話が届かず、テスト導入の稟議が起票されないまま終わる。</p>
       </div>
-      <div class="card card--problem">
-        <p class="card__ttl">担当者止まりで、<br>予算の話にならない</p>
-        <p class="card__txt">アポは取れる。ただし出てくるのは現場担当者。決裁権も予算枠も持たないため、「一度持ち帰ります」の先が動かない。</p>
+      <div class="worry__item">
+        <div class="worry__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 9h5M19.5 6.5v5"/>
+          </svg>
+        </div>
+        <h3 class="worry__ttl">担当者止まりで、<br>予算の話にならない</h3>
+        <p class="worry__txt">アポは取れる。ただし出てくるのは現場担当者。決裁権も予算枠も持たないため、「一度持ち帰ります」の先が動かない。</p>
       </div>
-      <div class="card card--problem">
-        <p class="card__ttl">テレアポも<br>フォーム営業も枯れた</p>
-        <p class="card__txt">代表番号は受付でブロック。問い合わせフォームは一括送信が飽和し、大手ほど開封すらされない。展示会の名刺も温度が上がらない。</p>
+      <div class="worry__item">
+        <div class="worry__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.6a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2Z"/>
+            <path d="m2 2 20 20"/>
+          </svg>
+        </div>
+        <h3 class="worry__ttl">テレアポも<br>フォーム営業も枯れた</h3>
+        <p class="worry__txt">代表番号は受付でブロック。問い合わせフォームは一括送信が飽和し、大手ほど開封すらされない。展示会の名刺も温度が上がらない。</p>
       </div>
     </div>
 
-    <div class="insight">
-      <p class="insight__lead">原因は、営業力ではなく<strong>「入口の高さ」</strong>です。</p>
-      <p class="insight__txt">
-        大手飲食チェーンの意思決定は、中期経営計画 → 各部門のKPI → 予算、という順で降りてきます。<br>
-        つまり<strong>「どの予算で、どの取り組みのために買うのか」が中計に紐づいていない提案は、現場が気に入っても稟議が通らない</strong>。<br>
+    <div class="verdict">
+      <p class="verdict__ttl">原因は、営業力ではなく<span class="em">「入口の高さ」</span>です。</p>
+      <p class="verdict__txt">
+        大手飲食チェーンの意思決定は、中期経営計画 → 各部門のKPI → 予算、という順で降りてきます。
+        つまり<strong>「どの予算で、どの取り組みのために買うのか」が中計に紐づいていない提案は、現場が気に入っても稟議が通らない</strong>。
         逆に言えば、最初から中計に紐づけて社長・役員に届けば、話は一気に速くなります。
       </p>
     </div>
   </div>
 </section>
 
-<!-- ============ 手法 ============ -->
-<section class="section section--dark" id="method">
+<!-- ============================================================
+     特長セクション
+     参考サイトを踏襲：「特長01」「特長02」と番号付きで明確に区切り、
+     見出しを大きく・説明は短い段落＋箇条書き・各特長の後に小さくCTA。
+     ============================================================ -->
+<section class="section" id="feature">
   <div class="wrap">
-    <p class="sec-label sec-label--light">Method</p>
-    <h2 class="sec-title sec-title--light">かざあな隊の3ステップ</h2>
-    <p class="sec-desc sec-desc--light">「社長の指示で決裁者を引っ張り出す」。ここだけに特化した設計です。</p>
+    <div class="sec-head">
+      <p class="sec-label">FEATURE</p>
+      <h2 class="sec-title">かざあな隊が選ばれる、2つの理由。</h2>
+      <p class="sec-lead">他社との違いは、この2点に尽きます。</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature__grid">
+        <p class="feature__no">特長<b>01</b></p>
+        <div>
+          <h3 class="feature__ttl">中計はめ込みを、量産できる</h3>
+          <p class="feature__txt">
+            1社1社の中期経営計画を読み込んで手紙を設計する——言うのは簡単ですが、これを毎月数十社分、品質を落とさず回すには仕組みが要ります。
+            <strong>「丁寧なカスタマイズ」を再現性のある工程にした</strong>のが1つ目の理由です。
+          </p>
+          <ul class="feature__list">
+            <li>出店・改装計画、省人化、原価対策、フードロス、店舗DX、人材採用——対象1社ごとにIR資料と公開情報を読み込む</li>
+            <li>タイトルに先方の施策名をそのまま使い、本文まで1社ずつ書き下ろす</li>
+            <li>読み込みマニュアル・構文ルール・差出人設計・品質チェック基準を標準化</li>
+            <li>コピペのDMではないため、大手ほど「読まれる手紙」になる</li>
+          </ul>
+          <div class="feature__cta">
+            <p>御社の商材が、どの施策にはめ込めるか。無料相談でその場で仮説をお出しします。</p>
+            <a class="btn btn--primary btn--sm" href="#contact">仮説を聞いてみる</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature__grid">
+        <p class="feature__no">特長<b>02</b></p>
+        <div>
+          <h3 class="feature__ttl">「秘書と受付は人種が違う」を知っている</h3>
+          <p class="feature__txt">
+            代表番号の受付は、売り込みを切るのが仕事。一方<strong>秘書は、社長宛の約束を預かって待ってくれる</strong>職種です。
+            この違いを踏まえて手紙を「届けて終わり」にしないのが2つ目の理由です。
+          </p>
+          <ul class="feature__list">
+            <li>秘書突破のための架電チャート（台本）を保有</li>
+            <li>テレアポではなく「手紙の到着確認」という事務連絡のトーンで架電</li>
+            <li>届いているか、いつまでに返事をもらえるかまで握る</li>
+            <li>この形での架電で、秘書室に繋がる割合は約4割が目安</li>
+          </ul>
+          <div class="feature__cta">
+            <p>実際の架電トークと、返信までの流れをご説明します。</p>
+            <a class="btn btn--primary btn--sm" href="#contact">詳しい説明を受ける</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     サービスの流れ（3ステップ）
+     ============================================================ -->
+<section class="section section--alt" id="method">
+  <div class="wrap">
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">METHOD</p>
+      <h2 class="sec-title">かざあな隊の3ステップ</h2>
+      <p class="sec-lead">「社長の指示で決裁者を引っ張り出す」。ここだけに特化した設計です。</p>
+    </div>
 
     <ol class="steps">
       <li class="step">
-        <div class="step__no">STEP 1</div>
+        <p class="step__no">STEP 1</p>
         <h3 class="step__ttl">チェーン本部の中期経営計画を読み込む</h3>
-        <p class="step__txt">
-          出店・改装計画、省人化、原価対策、フードロス、店舗DX、人材採用・定着——。
-          対象1社ごとに公開情報とIR資料を読み込み、<strong>「御社のサービスがどの施策に効くか」</strong>を特定します。
-          読み込み専用のマニュアルと人員を持ち、これを高い精度で量産できることが土台です。
-        </p>
+        <p class="step__txt">対象1社ごとに公開情報とIR資料を読み込み、「御社のサービスがどの施策に効くか」を特定します。読み込み専用のマニュアルと人員を持ち、高い精度で量産できることが土台です。</p>
       </li>
       <li class="step">
-        <div class="step__no">STEP 2</div>
+        <p class="step__no">STEP 2</p>
         <h3 class="step__ttl">社長・役員宛の手紙を、1社ずつ書き下ろす</h3>
-        <p class="step__txt">
-          コピペのDMではありません。<strong>タイトルに先方の施策名をそのまま使い</strong>、
-          「御社は◯◯をされている会社です。その中の課題①②に対して、当社は△△を提供できます」という型で組み立てる。
-          宛名は担当者ではなく<strong>社長・役員に直接</strong>。A4にまとめ、和紙に印刷して郵送します。
-        </p>
+        <p class="step__txt">タイトルに先方の施策名をそのまま使い、「御社は◯◯をされている会社です。その課題に対して当社は△△を提供できます」という型で組み立てる。宛名は担当者ではなく社長・役員に直接送ります。</p>
       </li>
       <li class="step">
-        <div class="step__no">STEP 3</div>
+        <p class="step__no">STEP 3</p>
         <h3 class="step__ttl">秘書室に追電し、「返事の期日」を握る</h3>
-        <p class="step__txt">
-          送りっぱなしにはしません。専任スタッフが<strong>テレアポではなく事務連絡として</strong>架電し、
-          「先日お送りした手紙の到着確認をしたいので秘書室をお願いします」と繋ぐ。
-          届いているか、いつまでに返事をもらえるかまで握ります。
-        </p>
+        <p class="step__txt">送りっぱなしにはしません。専任スタッフがテレアポではなく事務連絡として架電し、「先日お送りした手紙の到着確認をしたいので秘書室をお願いします」と繋ぎます。</p>
       </li>
     </ol>
 
-    <div class="result-box">
-      <p class="result-box__ttl">その結果、起きること</p>
-      <p class="result-box__txt">
-        手紙に記載した代表アドレス宛に、<strong>先方の本部長・部長クラスから返信が届きます。</strong><br>
+    <div class="result">
+      <p class="result__ttl">その結果、起きること</p>
+      <p class="result__txt">
+        手紙に記載した代表アドレス宛に、<strong>先方の本部長・部長クラスから返信が届きます。</strong>
         「社長の◯◯より指示をいただきご連絡しております」「弊社代表宛にお手紙を頂戴しありがとうございました」——
-        <strong>アウトバウンドの施策なのに、インバウンドのように商談が決まる。</strong><br>
+        <strong>アウトバウンドの施策なのに、インバウンドのように商談が決まる。</strong>
         社長の命を受けた決裁者が出てくるため、扱いが丁寧で、話が速く、金額が大きくなります。
       </p>
     </div>
   </div>
 </section>
 
-<!-- ============ 強み ============ -->
-<section class="section" id="strength">
+<!-- ============================================================
+     演出2：便箋が三つ折りから開く
+     ------------------------------------------------------------
+     ・パネル3枚を上下 rotateX で折る。高さは動かさず transform / opacity のみ。
+     ・折りたたんでもパネルは場所を占めたままなので、レイアウトは動かない。
+     ・発火は IntersectionObserver のみ（scroll イベントは使わない）。
+     ・状態は .st-1 / .st-2 / .st-3 の付け替えだけ。中間状態は作らない。
+     ------------------------------------------------------------
+     【便箋を写真に差し替える場合の注意】
+     折り目は「紙の」1/3であって「画像の」1/3ではありません。
+     背景の余白が残っていると、画像を等分しても折り目とズレます。
+     写真は必ず紙の範囲でトリミング（背景を落としたうえで数px内側も削る）してから
+     .fold__face の背景に入れてください。数px残った背景色は、折ったときに
+     黒い縁として見えます。現状は写真がないため、便箋の面をCSSで描いています
+     （余白がないので折り目は正確に1/3に来ます）。
+     img で差し替える場合は width:100% / height:300% / object-fit:cover とし、
+     top を 0 / -100% / -200% にずらしてください（fill ではなく cover）。
+     <picture> を使うなら picture{display:contents} を必ず指定すること。
+     picture と img の両方に height:300% を書くと入れ子で900%になり折り目が合いません。
+     ============================================================ -->
+<section class="section" id="letter">
   <div class="wrap">
-    <p class="sec-label">Strength</p>
-    <h2 class="sec-title">他社と違うのは、この2点だけです。</h2>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">LETTER</p>
+      <h2 class="sec-title">その手紙は、こう開かれる。</h2>
+      <p class="sec-lead">秘書の手で三つ折りが開かれ、社長の机に届くまで。</p>
+    </div>
 
-    <div class="strengths">
-      <div class="strength">
-        <p class="strength__no">01</p>
-        <h3 class="strength__ttl">中計はめ込みを、量産できる</h3>
-        <p class="strength__txt">
-          1社1社の中期経営計画を読み込んで手紙を設計する——言うのは簡単ですが、これを毎月数十社分、品質を落とさず回すには仕組みが要ります。
-          読み込みマニュアル・構文ルール・差出人設計・品質チェック基準を標準化し、<strong>「丁寧なカスタマイズ」を再現性のある工程にした</strong>のが1つ目の強みです。
-        </p>
+    <div class="fold-layout">
+      <div class="fold-stage">
+        <!-- 初期状態は三つ折り。JSが .st-1 / .st-2 / .st-3 を付け替える -->
+        <div class="fold st-1" id="foldStage">
+          <div class="fold__panel fold__panel--top">
+            <div class="fold__face">
+              <div class="fold__sheet">
+                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
+                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
+                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
+                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
+                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
+                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
+                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
+              </div>
+            </div>
+          </div>
+          <div class="fold__panel fold__panel--mid">
+            <div class="fold__face">
+              <div class="fold__sheet">
+                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
+                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
+                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
+                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
+                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
+                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
+                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
+              </div>
+            </div>
+          </div>
+          <div class="fold__panel fold__panel--bot">
+            <div class="fold__face">
+              <div class="fold__sheet">
+                <p class="fold__to">◯◯株式会社<br>代表取締役社長 ◯◯ ◯◯ 様</p>
+                <p class="fold__head">貴社中期経営計画「省人化と店舗DXの推進」について</p>
+                <p class="fold__p">拝啓 時下ますますご清栄のこととお慶び申し上げます。突然のお手紙にて失礼いたします。</p>
+                <p class="fold__p">貴社が公表されている中期経営計画を拝読し、なかでも「店舗オペレーションの省人化」に関する記述に、当社がお力になれる部分があると考え筆を執りました。</p>
+                <p class="fold__p">当社は厨房まわりの省人化設備を提供しており、同規模のチェーン様において、ピーク帯の人時を圧縮した実績がございます。</p>
+                <p class="fold__p">貴社の出店計画と併せてご説明できればと存じます。ご多忙のところ恐縮ですが、ご一読いただけますと幸いです。</p>
+                <p class="fold__sign">かざあな隊　代表　◯◯ ◯◯</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 朱の印：border-radius ではなく SVG の circle で描く -->
+          <svg class="fold__seal" viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#c8102e" stroke-width="6"/>
+            <text x="50" y="42" text-anchor="middle" fill="#c8102e"
+                  font-size="30" font-weight="700" font-family="serif">かざ</text>
+            <text x="50" y="76" text-anchor="middle" fill="#c8102e"
+                  font-size="30" font-weight="700" font-family="serif">あな</text>
+          </svg>
+        </div>
       </div>
-      <div class="strength">
-        <p class="strength__no">02</p>
-        <h3 class="strength__ttl">「秘書と受付は人種が違う」を知っている</h3>
-        <p class="strength__txt">
-          代表番号の受付は、売り込みを切るのが仕事。一方<strong>秘書は、社長宛の約束を預かって待ってくれる</strong>職種です。
-          この違いを踏まえた架電チャート（秘書突破の台本）を持ち、事務連絡のトーンで秘書室に繋ぎ、返信期日まで握りにいく。
-          手紙を「届けて終わり」にしないノウハウが2つ目の強みです。
-        </p>
-      </div>
+
+      <ol class="fold-steps">
+        <li class="fold-step" data-state="st-1">
+          <p class="fold-step__no">01</p>
+          <h3 class="fold-step__ttl">三つ折りのまま、秘書の手に届く</h3>
+          <p class="fold-step__txt">和紙に印刷したA4を三つ折りにして封入。宛名は担当者ではなく社長・役員宛。まず秘書室で開封され、社長に上げるべき手紙かどうかが判断されます。</p>
+        </li>
+        <li class="fold-step" data-state="st-2">
+          <p class="fold-step__no">02</p>
+          <h3 class="fold-step__ttl">開いた瞬間に、自社の話だと分かる</h3>
+          <p class="fold-step__txt">見出しに入るのは、先方の中期経営計画にある施策名そのもの。「よその会社にも送っている手紙」ではないことが、一行目で伝わります。ここが読まれるかどうかの分かれ目です。</p>
+        </li>
+        <li class="fold-step" data-state="st-3">
+          <p class="fold-step__no">03</p>
+          <h3 class="fold-step__ttl">社長の机に上がり、指示が出る</h3>
+          <p class="fold-step__txt">社長宛に届いた手紙は社内で回り、担当部門へ指示が降ります。数日後、手紙に記した代表アドレスに、本部長・部長クラスから返信が届きます。</p>
+        </li>
+      </ol>
     </div>
   </div>
 </section>
 
-<!-- ============ 事例 ============ -->
-<!--
-  掲載について：実在の案件だが、掲載許諾が未取得のため両社を匿名化して掲載している。
-  社名・宛名・所在地・担当者名・企業が特定される施策名は、いずれも画像の画素を塗りつぶして非公開化済み
-  （CSSで隠しているのではなく、加工後の画像を配置している）。マスキング前の原本は _private/ にあり、
-  リポジトリには含めない。判断根拠は docs/LP設計メモ.md を参照。
-  許諾が取れた場合は、原本から作り直した実名版に差し替えること。
--->
-<section class="section section--case" id="case">
+<!-- ============================================================
+     事例セクション
+     参考サイトを踏襲：カード型で実物を見せ、その下に「導入前／導入後」の
+     ビフォーアフター比較を置く。
+     ------------------------------------------------------------
+     掲載について：実在の案件だが、掲載許諾が未取得のため両社を匿名化している。
+     社名・宛名・所在地・担当者名・企業が特定される施策名は、いずれも
+     画像の画素をぼかして復元不能にしている（CSSで隠しているのではなく、
+     加工後の画像を配置している）。マスキング前の原本は _private/ にあり、
+     リポジトリには含めない。判断根拠は docs/LP設計メモ.md を参照。
+     許諾が取れた場合は、原本から作り直した実名版に差し替えること。
+     ============================================================ -->
+<section class="section" id="case">
   <div class="wrap">
-    <p class="sec-label">Case</p>
-    <h2 class="sec-title">大手飲食チェーン本部から、<br class="sp">返信が届いた実例。</h2>
-    <p class="sec-desc">
-      冷蔵・冷凍設備を扱う事業者様から、<strong>全国展開する大手外食チェーン</strong>への1通。<br>
-      受付でも、店舗でも、現場担当者でもなく——<strong>本部から「ご面談をお願いします」と返ってきました。</strong>
-    </p>
+    <div class="sec-head">
+      <p class="sec-label">CASE</p>
+      <h2 class="sec-title">大手飲食チェーン本部から、返信が届いた実例。</h2>
+      <p class="sec-lead">
+        冷蔵・冷凍設備を扱う事業者様から、<strong>全国展開する大手外食チェーン</strong>への1通。
+        受付でも、店舗でも、現場担当者でもなく——<strong>本部から「ご面談をお願いします」と返ってきました。</strong>
+      </p>
+    </div>
 
     <div class="case">
       <figure class="case__item">
         <div class="case__imgwrap">
           <img src="assets/img/case-letter.jpg" width="1200" height="632" loading="lazy"
-               alt="大手外食チェーンの代表取締役会長兼社長CEO宛に、手書きで宛名を書いた封筒。社名と宛名は非公開処理済み">
+               alt="大手外食チェーンの代表取締役会長兼社長CEO宛に、手書きで宛名を書いた封筒。社名と宛名はぼかし処理済み">
         </div>
         <figcaption>
-          <span class="case__step">送った手紙</span>
-          宛名は担当者ではなく、<strong>代表取締役会長 兼 社長CEO 宛</strong>。
-          先方のサステナビリティ方針を読み込んだうえで、その施策に自社の何が貢献できるかを書き下ろしました。
+          <p class="case__step">送った手紙</p>
+          <p class="case__cap">
+            宛名は担当者ではなく、<strong>代表取締役会長 兼 社長CEO 宛</strong>。
+            先方のサステナビリティ方針を読み込んだうえで、その施策に自社の何が貢献できるかを書き下ろしました。
+          </p>
         </figcaption>
       </figure>
 
       <figure class="case__item">
         <div class="case__imgwrap">
           <img src="assets/img/case-reply.jpg" width="960" height="930" loading="lazy"
-               alt="大手外食チェーンの店舗開発本部の担当者から届いた返信メール。社名・氏名・メールアドレスは非公開処理済み">
+               alt="大手外食チェーンの店舗開発本部の担当者から届いた返信メール。社名・氏名・メールアドレスはぼかし処理済み">
         </div>
         <figcaption>
-          <span class="case__step">届いた返信</span>
-          <strong>店舗開発本部</strong>の担当者から直接返信。
-          「弊社代表宛にお手紙を頂戴し」から始まり、<strong>ご面談の依頼と窓口の指名</strong>まで届きました。
-          <span class="case__note">※ 掲載許諾の関係で、社名・氏名・連絡先は画像を加工して非公開にしています。</span>
+          <p class="case__step">届いた返信</p>
+          <p class="case__cap">
+            <strong>店舗開発本部</strong>の担当者から直接返信。
+            「弊社代表宛にお手紙を頂戴し」から始まり、<strong>ご面談の依頼と窓口の指名</strong>まで届きました。
+            <span class="case__note">※ 掲載許諾の関係で、社名・氏名・連絡先はぼかしています。</span>
+          </p>
         </figcaption>
       </figure>
     </div>
 
-    <div class="case-points">
-      <p class="case-points__ttl">この1通で起きたこと</p>
-      <ul class="case-points__list">
-        <li>
-          <span class="case-points__no">01</span>
-          <p class="case-points__h">社長宛が、本部の窓口に変わった</p>
-          <p class="case-points__t">代表宛に届いた手紙が社内で回り、<strong>店舗開発本部の担当者が「私が窓口となります」</strong>と名乗り出る形に。テレアポでは到達できない層です。</p>
-        </li>
-        <li>
-          <span class="case-points__no">02</span>
-          <p class="case-points__h">先方の方針の言葉で、返事が来た</p>
-          <p class="case-points__t">返信には<strong>先方自身のサステナビリティ方針の名称と、公表している「SDGs達成」の文言</strong>がそのまま並びました。中計・方針に紐づけて書いた手紙だからこそ、その文脈のまま返ってきます。</p>
-        </li>
-        <li>
-          <span class="case-points__no">03</span>
-          <p class="case-points__h">先方から「ご提案がございましたら」</p>
-          <p class="case-points__t">新規設備の具体的な検討テーマに触れたうえで、<strong>先方側から面談を依頼</strong>される展開に。アウトバウンドで送った手紙が、インバウンドの問い合わせのように着地します。</p>
-        </li>
-      </ul>
+    <!-- 導入前／導入後の比較。数値の実測は未取得のため、事実として言える変化のみを記載 -->
+    <div class="ba">
+      <div class="ba__col ba__col--before">
+        <p class="ba__label">BEFORE</p>
+        <ul class="ba__list">
+          <li>アプローチ先は店舗・現場担当が中心</li>
+          <li>本部の商品部・購買部まで話が届かない</li>
+          <li>代表番号は受付でブロックされる</li>
+          <li>提案しても稟議が起票されない</li>
+        </ul>
+      </div>
+      <div class="ba__arrow" aria-hidden="true">→</div>
+      <div class="ba__col ba__col--after">
+        <p class="ba__label">AFTER</p>
+        <ul class="ba__list">
+          <li>手紙が代表に届き、社内で回る</li>
+          <li>店舗開発本部の担当者が「私が窓口となります」と名乗り出る</li>
+          <li>先方の方針・施策の文脈で返信が来る</li>
+          <li>先方側から面談を依頼される</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sec-head" style="margin:56px 0 24px">
+      <h3 class="sub-title">この1通で起きたこと</h3>
+    </div>
+    <div class="worry">
+      <div class="worry__item">
+        <p class="feature__no">POINT<b>01</b></p>
+        <h4 class="worry__ttl" style="margin-top:14px">社長宛が、本部の窓口に変わった</h4>
+        <p class="worry__txt">代表宛に届いた手紙が社内で回り、<strong>店舗開発本部の担当者が「私が窓口となります」</strong>と名乗り出る形に。テレアポでは到達できない層です。</p>
+      </div>
+      <div class="worry__item">
+        <p class="feature__no">POINT<b>02</b></p>
+        <h4 class="worry__ttl" style="margin-top:14px">先方の方針の言葉で、返事が来た</h4>
+        <p class="worry__txt">返信には<strong>先方自身のサステナビリティ方針の名称と、公表している「SDGs達成」の文言</strong>がそのまま並びました。方針に紐づけて書いた手紙だからこそ、その文脈のまま返ってきます。</p>
+      </div>
+      <div class="worry__item">
+        <p class="feature__no">POINT<b>03</b></p>
+        <h4 class="worry__ttl" style="margin-top:14px">先方から「ご提案がございましたら」</h4>
+        <p class="worry__txt">新規設備の具体的な検討テーマに触れたうえで、<strong>先方側から面談を依頼</strong>される展開に。アウトバウンドで送った手紙が、インバウンドの問い合わせのように着地します。</p>
+      </div>
     </div>
 
     <p class="micro">
-      ※ 実際にいただいた返信をそのまま掲載しています。改変は行わず、企業・個人が特定される箇所のみ非公開処理をしています。<br>
+      ※ 実際にいただいた返信をそのまま掲載しています。改変は行わず、企業・個人が特定される箇所のみぼかしています。<br>
       ※ 本事例は成果を約束するものではありません。商材・業界・対象企業の規模によって結果は変わります。
     </p>
   </div>
 </section>
 
-<!-- ============ 実績・数字 ============ -->
-<section class="section section--paper" id="proof">
+<!-- ============================================================
+     他業種での反応
+     ============================================================ -->
+<section class="section section--alt" id="proof">
   <div class="wrap">
-    <p class="sec-label">Proof</p>
-    <h2 class="sec-title">数字と、実際の反応。</h2>
-
-    <div class="stats">
-      <div class="stat">
-        <p class="stat__num">10<span class="unit">社に1社</span></p>
-        <p class="stat__label">アポ獲得の基準値</p>
-        <p class="stat__note">大手向け商材における当社の基準値です。<strong>保証ではありません。</strong>商材・業界・対象企業の規模により結果は変わります。</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num">約4<span class="unit">割</span></p>
-        <p class="stat__label">追電で秘書室に繋がる割合</p>
-        <p class="stat__note">「手紙の到着確認」という事務連絡の形で架電した場合の目安値です。</p>
-      </div>
-      <div class="stat">
-        <p class="stat__num">役員<span class="unit">クラス</span></p>
-        <p class="stat__label">商談相手のレイヤー</p>
-        <p class="stat__note">社長宛に送るため、返信は本部長・部長・執行役員クラスから届きます。担当者アポとは初速が違います。</p>
-      </div>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">VOICE</p>
+      <h2 class="sec-title">大手企業からの反応</h2>
+      <p class="sec-lead">飲食以外の業界でも、同じ形で決裁者から返信が届いています。</p>
     </div>
 
-    <!-- 実名掲載について：クライアント各社の掲載許諾が取れ次第、下記を実社名・実数値に差し替えてください。
-         現状は許諾未確認のため、業種表記に伏せています。 -->
-    <h3 class="sub-ttl">大手企業からの反応（一部・業種表記）</h3>
-    <div class="cards cards--3 quotes">
+    <!-- 実名掲載について：各社の掲載許諾が取れ次第、業種表記を実社名に差し替えてください -->
+    <div class="quotes">
       <figure class="quote">
         <blockquote>「社長の◯◯より指示をいただきご連絡させていただいております。早速ですが、もしご都合よろしければ——」</blockquote>
         <figcaption>東証プライム上場・日用品メーカー／社長秘書経由で決裁者から返信</figcaption>
@@ -287,20 +511,24 @@
         <figcaption>大手小売チェーン／EC本部長より返信・受注済</figcaption>
       </figure>
     </div>
-    <p class="micro">※ 実際に当社が獲得した商談の返信文面を、企業が特定されない形に編集して掲載しています。実物の手紙と返信は<a href="#case" class="link-in">事例セクション</a>をご覧ください。個別の実績は商談時に開示します。</p>
+    <p class="micro">※ 実際に当社が獲得した商談の返信文面を、企業が特定されない形に編集して掲載しています。個別の実績は商談時に開示します。</p>
   </div>
 </section>
 
-<!-- ============ 相性 ============ -->
+<!-- ============================================================
+     相性
+     ============================================================ -->
 <section class="section" id="fit">
   <div class="wrap">
-    <p class="sec-label">Fit</p>
-    <h2 class="sec-title">正直に、向き不向きをお伝えします。</h2>
-    <p class="sec-desc">合わない商材を無理に受注しても、双方が不幸になるだけなので。</p>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">FIT</p>
+      <h2 class="sec-title">正直に、向き不向きをお伝えします。</h2>
+      <p class="sec-lead">合わない商材を無理に受注しても、双方が不幸になるだけなので。</p>
+    </div>
 
     <div class="fit">
       <div class="fit__col fit__col--good">
-        <h3 class="fit__ttl"><span class="mark" aria-hidden="true">◎</span>相性が良い</h3>
+        <h3 class="fit__ttl"><span class="fit__mark" aria-hidden="true">◎</span>相性が良い</h3>
         <ul class="fit__list">
           <li>店舗DX・モバイルオーダー・勤怠/シフト管理などの<strong>SaaS・システム</strong></li>
           <li>省人化を実現する<strong>厨房機器・設備・ロボティクス</strong></li>
@@ -311,7 +539,7 @@
         </ul>
       </div>
       <div class="fit__col fit__col--bad">
-        <h3 class="fit__ttl"><span class="mark" aria-hidden="true">△</span>注意が必要</h3>
+        <h3 class="fit__ttl"><span class="fit__mark" aria-hidden="true">△</span>注意が必要</h3>
         <ul class="fit__list">
           <li>意思決定が<strong>店舗・現場担当者で完結</strong>してしまう商材</li>
           <li>単価が大手の予算感に対して<strong>高すぎる／小さすぎる</strong>もの</li>
@@ -324,94 +552,116 @@
   </div>
 </section>
 
-<!-- ============ 料金 ============ -->
-<section class="section section--dark" id="price">
+<!-- ============================================================
+     料金
+     ============================================================ -->
+<section class="section section--alt" id="price">
   <div class="wrap">
-    <p class="sec-label sec-label--light">Price</p>
-    <h2 class="sec-title sec-title--light">料金の目安</h2>
-    <p class="sec-desc sec-desc--light">
-      1社にかける工数が大きいため成功報酬ではなく、<strong>「月に何社へ手紙を届けるか」</strong>で組み立てます。<br>
-      社数が増えるほど1社あたりの単価は下がります。
-    </p>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">PRICE</p>
+      <h2 class="sec-title">料金の目安</h2>
+      <p class="sec-lead">
+        1社にかける工数が大きいため成功報酬ではなく、<strong>「月に何社へ手紙を届けるか」</strong>で組み立てます。
+        社数が増えるほど1社あたりの単価は下がります。
+      </p>
+    </div>
 
-    <div class="price-box">
-      <p class="price-box__label">月額</p>
-      <p class="price-box__main"><span class="cur">¥</span>150,000<span class="tail">〜</span></p>
-      <p class="price-box__sub">（税別・別途初期費用）</p>
-      <ul class="price-box__list">
+    <div class="price">
+      <p class="price__label">月額</p>
+      <p class="price__main"><span class="cur">¥</span>150,000<span class="tail">〜</span></p>
+      <p class="price__sub">（税別・別途初期費用）</p>
+      <ul class="price__list">
         <li><span>プラン</span>月あたりのアプローチ社数で3段階</li>
         <li><span>単価</span>社数が増えるほどボリュームディスカウント</li>
         <li><span>期間</span>ベース構築（約1ヶ月）＋実働</li>
         <li><span>支払</span>一括前入金／月払いいずれも相談可</li>
       </ul>
-      <p class="price-box__note">
-        御社の商材・狙うチェーンの規模・想定社数によって最適なプランは変わります。<br>
+      <p class="price__note">
+        御社の商材・狙うチェーンの規模・想定社数によって最適なプランは変わります。
         <strong>具体的な金額とプラン構成は、無料相談で御社の条件に合わせてご提示します。</strong>
       </p>
       <a class="btn btn--primary btn--lg" href="#contact">料金の詳細を聞く</a>
     </div>
 
-    <h3 class="sub-ttl sub-ttl--light">オプション：援護射撃</h3>
-    <p class="sec-desc sec-desc--light">獲得した商談を“受注”に変えるための、商談まわりの個別サポートです。</p>
-    <div class="cards cards--3 opts">
-      <div class="card card--opt">
-        <p class="card__ttl">商談前の作戦会議</p>
-        <p class="card__txt">大手役員との商談に向けて、トーク設計と想定問答をすり合わせます。</p>
+    <h3 class="sub-title" style="margin-top:56px">オプション：援護射撃</h3>
+    <p class="sec-lead" style="margin-top:0;margin-bottom:26px">獲得した商談を“受注”に変えるための、商談まわりの個別サポートです。</p>
+    <div class="opts">
+      <div class="opt">
+        <p class="opt__ttl">商談前の作戦会議</p>
+        <p class="opt__txt">大手役員との商談に向けて、トーク設計と想定問答をすり合わせます。</p>
       </div>
-      <div class="card card--opt">
-        <p class="card__ttl">商談資料の作成代行</p>
-        <p class="card__txt">本部に刺さる提案・ヒアリング資料を、御社に代わって作成します。</p>
+      <div class="opt">
+        <p class="opt__ttl">商談資料の作成代行</p>
+        <p class="opt__txt">本部に刺さる提案・ヒアリング資料を、御社に代わって作成します。</p>
       </div>
-      <div class="card card--opt">
-        <p class="card__ttl">商談同行</p>
-        <p class="card__txt">大手攻略の経験を持つ担当が同席し、その場でクロージングを後押しします。</p>
+      <div class="opt">
+        <p class="opt__ttl">商談同行</p>
+        <p class="opt__txt">大手攻略の経験を持つ担当が同席し、その場でクロージングを後押しします。</p>
       </div>
     </div>
-    <p class="micro micro--light">※ オプションはすべて任意です。料金・適用単位は商談内容に応じてご相談ください。</p>
+    <p class="micro">※ オプションはすべて任意です。料金・適用単位は商談内容に応じてご相談ください。</p>
   </div>
 </section>
 
-<!-- ============ 進め方 ============ -->
-<section class="section section--paper" id="flow">
+<!-- ============================================================
+     お取り組みの流れ
+     ============================================================ -->
+<section class="section" id="flow">
   <div class="wrap">
-    <p class="sec-label">Flow</p>
-    <h2 class="sec-title">お取り組みの流れ</h2>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">FLOW</p>
+      <h2 class="sec-title">サービス開始までの流れ</h2>
+    </div>
 
     <ol class="flow">
       <li class="flow__item">
-        <p class="flow__no">01</p>
-        <h3 class="flow__ttl">無料相談</h3>
-        <p class="flow__txt">商材・現在の開拓状況・狙いたいチェーンの規模感をヒアリング。相性が合うかを率直にお伝えします。</p>
+        <p class="flow__no">STEP<b>01</b></p>
+        <div>
+          <h3 class="flow__ttl">無料相談</h3>
+          <p class="flow__txt">商材・現在の開拓状況・狙いたいチェーンの規模感をヒアリング。相性が合うかを率直にお伝えします。</p>
+        </div>
       </li>
       <li class="flow__item">
-        <p class="flow__no">02</p>
-        <h3 class="flow__ttl">ご契約・キックオフ</h3>
-        <p class="flow__txt">プランを決定し、専任のプロジェクトマネージャーが担当につきます。</p>
+        <p class="flow__no">STEP<b>02</b></p>
+        <div>
+          <h3 class="flow__ttl">ご契約・キックオフ</h3>
+          <p class="flow__txt">プランを決定し、専任のプロジェクトマネージャーが担当につきます。</p>
+        </div>
       </li>
       <li class="flow__item">
-        <p class="flow__no">03</p>
-        <h3 class="flow__ttl">ベース構築（約1ヶ月）</h3>
-        <p class="flow__txt">商品理解、ターゲットリストの方向性協議、提案方向性のすり合わせ、手紙の構文案作成まで。ここが成果を左右します。</p>
+        <p class="flow__no">STEP<b>03</b></p>
+        <div>
+          <h3 class="flow__ttl">ベース構築（約1ヶ月）</h3>
+          <p class="flow__txt">商品理解、ターゲットリストの方向性協議、提案方向性のすり合わせ、手紙の構文案作成まで。ここが成果を左右します。</p>
+        </div>
       </li>
       <li class="flow__item">
-        <p class="flow__no">04</p>
-        <h3 class="flow__ttl">投函・追電（実働）</h3>
-        <p class="flow__txt">毎月の対象社数に対して、手紙の作成 → 投函 → 秘書室への追電までを実行します。</p>
+        <p class="flow__no">STEP<b>04</b></p>
+        <div>
+          <h3 class="flow__ttl">投函・追電（実働）</h3>
+          <p class="flow__txt">毎月の対象社数に対して、手紙の作成 → 投函 → 秘書室への追電までを実行します。</p>
+        </div>
       </li>
       <li class="flow__item">
-        <p class="flow__no">05</p>
-        <h3 class="flow__ttl">商談化・月次報告</h3>
-        <p class="flow__txt">決裁者から返信が届いたら御社へ連携。月次定例で進捗と改善方針を共有します。</p>
+        <p class="flow__no">STEP<b>05</b></p>
+        <div>
+          <h3 class="flow__ttl">商談化・月次報告</h3>
+          <p class="flow__txt">決裁者から返信が届いたら御社へ連携。月次定例で進捗と改善方針を共有します。</p>
+        </div>
       </li>
     </ol>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
-<section class="section" id="faq">
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section class="section section--alt" id="faq">
   <div class="wrap wrap--narrow">
-    <p class="sec-label">FAQ</p>
-    <h2 class="sec-title">よくあるご質問</h2>
+    <div class="sec-head sec-head--center">
+      <p class="sec-label">FAQ</p>
+      <h2 class="sec-title">よくあるご質問</h2>
+    </div>
 
     <div class="faq">
       <details class="faq__item">
@@ -442,7 +692,10 @@
   </div>
 </section>
 
-<!-- ============ CTA / お問い合わせ ============ -->
+<!-- ============================================================
+     締めのCTA
+     参考サイトを踏襲：最後に大きめの問い合わせフォームを置く
+     ============================================================ -->
 <section class="section section--cta" id="contact">
   <div class="wrap wrap--narrow">
     <h2 class="cta-title">大手飲食チェーンの扉を、<br class="sp">こじ開けにいきませんか。</h2>
@@ -503,9 +756,9 @@
     <p class="footer__logo">かざあな隊</p>
     <p class="footer__txt">大手企業開拓に特化した新規開拓支援。<br>「大手の扉を開ける」ことだけをやっています。</p>
     <nav class="footer__nav" aria-label="フッターナビゲーション">
-      <a href="#problem">課題</a>
-      <a href="#method">手法</a>
-      <a href="#strength">強み</a>
+      <a href="#worry">お悩み</a>
+      <a href="#feature">特長</a>
+      <a href="#method">3ステップ</a>
       <a href="#case">事例</a>
       <a href="#price">料金</a>
       <a href="#flow">流れ</a>
@@ -518,7 +771,7 @@
 
 <!-- 追従CTA（スマホ） -->
 <div class="fixed-cta" id="fixedCta">
-  <a class="btn btn--primary btn--block" href="#contact">無料相談を申し込む</a>
+  <a class="btn btn--primary btn--block" href="#contact">無料相談・資料請求</a>
 </div>
 
 <script src="assets/js/main.js"></script>
