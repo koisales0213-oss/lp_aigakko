@@ -29,7 +29,7 @@
 
   /* ---------- スクロールで要素をふわっと表示 ---------- */
   var targets = document.querySelectorAll(
-    '.card, .insight, .step, .result-box, .strength, .stat, .quote, .fit__col, .price-box, .flow__item, .faq__item, .form'
+    '.card, .insight, .step, .result-box, .strength, .case__item, .case-points, .stat, .quote, .fit__col, .price-box, .flow__item, .faq__item, .form'
   );
 
   if ('IntersectionObserver' in window) {

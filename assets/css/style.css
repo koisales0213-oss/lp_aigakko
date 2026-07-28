@@ -241,6 +241,51 @@ ruby rt { font-size: .42em; letter-spacing: .1em; font-weight: 400; opacity: .75
 .strength__txt { font-size: 14.5px; color: var(--ink-sub); line-height: 2.05; }
 .strength__txt strong { color: var(--ink); font-weight: 700; }
 
+/* ---------- 事例 ---------- */
+.section--case {
+  background:
+    radial-gradient(900px 500px at 88% 0%, rgba(200,68,47,.07), transparent 60%),
+    linear-gradient(180deg, #fdfbf7 0%, var(--paper) 100%);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.case { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; align-items: start; }
+.case__item { margin: 0; }
+.case__imgwrap {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 14px; box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.case__imgwrap img { width: 100%; height: auto; border-radius: 6px; display: block; }
+.case__item figcaption {
+  font-size: 13.5px; color: var(--ink-sub); line-height: 1.95; margin-top: 18px;
+}
+.case__item figcaption strong { color: var(--ink); font-weight: 700; }
+.case__step {
+  display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .12em;
+  background: var(--navy); color: #fff; padding: 5px 12px; border-radius: 999px;
+  margin-right: 10px; vertical-align: 2px;
+}
+.case__note { display: block; font-size: 11.5px; color: #8a8577; margin-top: 8px; }
+
+.case-points {
+  margin-top: 48px; background: var(--white); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 36px 34px; box-shadow: var(--shadow);
+}
+.case-points__ttl {
+  font-size: 16px; font-weight: 800; margin-bottom: 24px;
+  padding-left: 13px; border-left: 4px solid var(--accent);
+}
+.case-points__list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.case-points__list li { position: relative; padding-top: 4px; }
+.case-points__no {
+  font-family: var(--font-serif); font-size: 13px; font-weight: 700;
+  color: var(--accent); letter-spacing: .1em; display: block; margin-bottom: 6px;
+}
+.case-points__h { font-size: 15.5px; font-weight: 700; line-height: 1.6; margin-bottom: 9px; }
+.case-points__t { font-size: 13.5px; color: var(--ink-sub); line-height: 1.95; }
+.case-points__t strong { color: var(--ink); font-weight: 700; }
+.link-in { color: var(--accent); font-weight: 700; }
+
 /* ---------- 数字 ---------- */
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 .stat {
@@ -444,6 +489,7 @@ select.form__input option { color: #111; }
    ============================================================ */
 @media (max-width: 960px) {
   .cards--3 { grid-template-columns: 1fr 1fr; }
+  .case-points__list { grid-template-columns: 1fr; gap: 22px; }
   .quotes { grid-template-columns: 1fr; }
   .gnav { display: none; }
 }
@@ -463,8 +509,9 @@ select.form__input option { color: #111; }
   .hero__cta { flex-direction: column; }
   .hero__cta .btn { width: 100%; }
 
-  .cards--3, .strengths, .stats, .fit { grid-template-columns: 1fr; }
-  .insight, .strength, .step, .price-box, .form { padding: 28px 22px; }
+  .cards--3, .strengths, .stats, .fit, .case { grid-template-columns: 1fr; }
+  .insight, .strength, .step, .price-box, .form, .case-points { padding: 28px 22px; }
+  .case__imgwrap { padding: 10px; }
   .result-box { padding: 26px 22px; }
   .flow__item { grid-template-columns: 56px 1fr; gap: 14px; padding: 22px 0; }
   .flow__no { font-size: 24px; }

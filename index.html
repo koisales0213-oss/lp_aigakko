@@ -24,7 +24,7 @@
     <nav class="gnav" aria-label="グローバルナビゲーション">
       <a href="#problem">課題</a>
       <a href="#method">手法</a>
-      <a href="#strength">強み</a>
+      <a href="#case">事例</a>
       <a href="#price">料金</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -174,6 +174,78 @@
   </div>
 </section>
 
+<!-- ============ 事例 ============ -->
+<!--
+  掲載について：実在の案件だが、掲載許諾が未取得のため両社を匿名化して掲載している。
+  社名・宛名・所在地・担当者名・企業が特定される施策名は、いずれも画像の画素を塗りつぶして非公開化済み
+  （CSSで隠しているのではなく、加工後の画像を配置している）。マスキング前の原本は _private/ にあり、
+  リポジトリには含めない。判断根拠は docs/LP設計メモ.md を参照。
+  許諾が取れた場合は、原本から作り直した実名版に差し替えること。
+-->
+<section class="section section--case" id="case">
+  <div class="wrap">
+    <p class="sec-label">Case</p>
+    <h2 class="sec-title">大手飲食チェーン本部から、<br class="sp">返信が届いた実例。</h2>
+    <p class="sec-desc">
+      冷蔵・冷凍設備を扱う事業者様から、<strong>全国展開する大手外食チェーン</strong>への1通。<br>
+      受付でも、店舗でも、現場担当者でもなく——<strong>本部から「ご面談をお願いします」と返ってきました。</strong>
+    </p>
+
+    <div class="case">
+      <figure class="case__item">
+        <div class="case__imgwrap">
+          <img src="assets/img/case-letter.jpg" width="1200" height="632" loading="lazy"
+               alt="大手外食チェーンの代表取締役会長兼社長CEO宛に、手書きで宛名を書いた封筒。社名と宛名は非公開処理済み">
+        </div>
+        <figcaption>
+          <span class="case__step">送った手紙</span>
+          宛名は担当者ではなく、<strong>代表取締役会長 兼 社長CEO 宛</strong>。
+          先方のサステナビリティ方針を読み込んだうえで、その施策に自社の何が貢献できるかを書き下ろしました。
+        </figcaption>
+      </figure>
+
+      <figure class="case__item">
+        <div class="case__imgwrap">
+          <img src="assets/img/case-reply.jpg" width="960" height="930" loading="lazy"
+               alt="大手外食チェーンの店舗開発本部の担当者から届いた返信メール。社名・氏名・メールアドレスは非公開処理済み">
+        </div>
+        <figcaption>
+          <span class="case__step">届いた返信</span>
+          <strong>店舗開発本部</strong>の担当者から直接返信。
+          「弊社代表宛にお手紙を頂戴し」から始まり、<strong>ご面談の依頼と窓口の指名</strong>まで届きました。
+          <span class="case__note">※ 掲載許諾の関係で、社名・氏名・連絡先は画像を加工して非公開にしています。</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="case-points">
+      <p class="case-points__ttl">この1通で起きたこと</p>
+      <ul class="case-points__list">
+        <li>
+          <span class="case-points__no">01</span>
+          <p class="case-points__h">社長宛が、本部の窓口に変わった</p>
+          <p class="case-points__t">代表宛に届いた手紙が社内で回り、<strong>店舗開発本部の担当者が「私が窓口となります」</strong>と名乗り出る形に。テレアポでは到達できない層です。</p>
+        </li>
+        <li>
+          <span class="case-points__no">02</span>
+          <p class="case-points__h">先方の方針の言葉で、返事が来た</p>
+          <p class="case-points__t">返信には<strong>先方自身のサステナビリティ方針の名称と、公表している「SDGs達成」の文言</strong>がそのまま並びました。中計・方針に紐づけて書いた手紙だからこそ、その文脈のまま返ってきます。</p>
+        </li>
+        <li>
+          <span class="case-points__no">03</span>
+          <p class="case-points__h">先方から「ご提案がございましたら」</p>
+          <p class="case-points__t">新規設備の具体的な検討テーマに触れたうえで、<strong>先方側から面談を依頼</strong>される展開に。アウトバウンドで送った手紙が、インバウンドの問い合わせのように着地します。</p>
+        </li>
+      </ul>
+    </div>
+
+    <p class="micro">
+      ※ 実際にいただいた返信をそのまま掲載しています。改変は行わず、企業・個人が特定される箇所のみ非公開処理をしています。<br>
+      ※ 本事例は成果を約束するものではありません。商材・業界・対象企業の規模によって結果は変わります。
+    </p>
+  </div>
+</section>
+
 <!-- ============ 実績・数字 ============ -->
 <section class="section section--paper" id="proof">
   <div class="wrap">
@@ -215,7 +287,7 @@
         <figcaption>大手小売チェーン／EC本部長より返信・受注済</figcaption>
       </figure>
     </div>
-    <p class="micro">※ 実際に当社が獲得した商談の返信文面を、企業が特定されない形に編集して掲載しています。飲食チェーンを含む具体的な実績は、商談時に個別開示します。</p>
+    <p class="micro">※ 実際に当社が獲得した商談の返信文面を、企業が特定されない形に編集して掲載しています。実物の手紙と返信は<a href="#case" class="link-in">事例セクション</a>をご覧ください。個別の実績は商談時に開示します。</p>
   </div>
 </section>
 
@@ -434,6 +506,7 @@
       <a href="#problem">課題</a>
       <a href="#method">手法</a>
       <a href="#strength">強み</a>
+      <a href="#case">事例</a>
       <a href="#price">料金</a>
       <a href="#flow">流れ</a>
       <a href="#faq">FAQ</a>
