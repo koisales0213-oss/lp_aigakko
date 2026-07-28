@@ -183,15 +183,14 @@ strong { font-weight: 700; color: var(--ink); }
 .hstat__note { font-size: 11.5px; color: var(--ink-mute); line-height: 1.8; margin-top: 6px; }
 
 /* ============================================================
-   演出1：封筒からの開封（ヒーロー）
-   ロード直後に自動再生。スクロール連動にはしない。JSは使わず
-   CSS animation の delay だけでタイムラインを組む。
-   イージングは全て cubic-bezier(0.16, 1, 0.3, 1)。
+   演出1：ヒーローの導入（ロード直後に自動再生）
+   スクロール連動にはしない。JSは使わず CSS animation の delay だけで
+   タイムラインを組む。イージングは全て cubic-bezier(0.16, 1, 0.3, 1)。
    ------------------------------------------------------------
-   0.00s 封筒フェードイン（scale 1.02 → 1.00 / 900ms）
-   0.55s 便箋が封筒の口から引き出される（1000ms）
+   0.00s 写真フェードイン（scale 1.03 → 1.00 / 900ms）
    1.15s 見出し1行目（行マスク：translateY(115%) → 0 / 420ms）
    1.28s 見出し2行目（130ms刻み固定）
+   1.41s 見出し3行目
    1.65s リード文 / 1.85s CTA
    ============================================================ */
 :root { --ease-out-q: cubic-bezier(0.16, 1, 0.3, 1); }
@@ -215,38 +214,15 @@ strong { font-weight: 700; color: var(--ink); }
 .hero__tag { --d: .95s; }
 @keyframes fadeUp { to { opacity: 1; transform: none; } }
 
-/* 封筒 */
+/* ヒーロー写真 */
 .hero__visual { position: relative; }
-/* padding-top で「便箋が上に出るぶんの余白」を確保する。
-   子要素の margin-top では親とマージン相殺が起きて余白が消えるため使わない。 */
-.envelope {
-  position: relative; padding-top: 40%;
-  opacity: 0; transform: scale(1.02);
-  animation: envIn .9s var(--ease-out-q) 0s forwards;
+.hero__photo {
+  width: 100%; height: auto; border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transform: scale(1.03);
+  animation: heroIn .9s var(--ease-out-q) 0s forwards;
 }
-@keyframes envIn { to { opacity: 1; transform: scale(1); } }
-.envelope__img {
-  width: 100%; border-radius: 10px; box-shadow: var(--shadow-lg);
-  position: relative; z-index: 2;
-}
-/* 封筒の口の位置に置くクリップ枠。枠の下端は封筒の上端より少し下に置き、
-   そこから下は封筒画像（z-index:2）が覆う＝中から出てくるように見える */
-.envelope__slot {
-  position: absolute; left: 8%; right: 8%; top: 0;
-  height: 56%; overflow: hidden; z-index: 1; pointer-events: none;
-}
-.envelope__letter {
-  position: absolute; inset: 0;
-  background: #fffdf8; border: 1px solid #e6ded0; border-radius: 6px 6px 2px 2px;
-  box-shadow: 0 -6px 20px rgba(16,21,28,.10);
-  padding: 7% 8% 0;
-  transform: translateY(96%);
-  animation: letterOut 1s var(--ease-out-q) .55s forwards;
-}
-@keyframes letterOut { to { transform: translateY(16%); } }
-.envelope__ttl { font-size: clamp(12px, 1.5vw, 17px); font-weight: 800; color: var(--ink); line-height: 1.6; }
-.envelope__rule { display: block; width: 44px; height: 2px; background: var(--red); margin: 10px 0; }
-.envelope__body { font-size: clamp(10px, 1.1vw, 12.5px); color: var(--ink-mute); line-height: 1.9; }
+@keyframes heroIn { to { opacity: 1; transform: scale(1); } }
 
 /* ============================================================
    演出2：01→02→03 のフローと連動した写真の切り替え
@@ -694,8 +670,7 @@ select.form__input { appearance: none; }
   /* 演出1：全要素が見えている開封済みの状態 */
   .hero__title .line,
   .hero__lead, .hero__cta, .hero__note, .hero__tag,
-  .envelope { animation: none; opacity: 1; transform: none; }
-  .envelope__letter { animation: none; transform: translateY(16%); }
+  .hero__photo { animation: none; opacity: 1; transform: none; }
 
   /* 演出2：切り替えは残すが、フェード・拡大は行わず即座に差し替える */
   .flow-img { transition: none; transform: none; }

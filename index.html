@@ -68,24 +68,14 @@
       </div>
 
       <!-- ========================================================
-           演出1：封筒からの開封（ロード直後に自動再生・JSは使わない）
-           封筒の開／閉の2枚が同一アングルで用意できないため、指示の
-           フォールバック方針に従い「便箋が引き出される」動きを主役にする。
-           口の位置に overflow:hidden の枠を置き、その中で便箋を
-           translateY(96%) → translateY(16%) と動かしてクリップする。
+           演出1：ヒーロー写真のフェードイン（ロード直後に自動再生・JSは使わない）
+           CSS animation の delay だけでタイムラインを組む。
+           0.00s から scale(1.03) → scale(1) ＋ opacity 0 → 1（900ms）。
            ======================================================== -->
-      <div class="hero__visual" aria-hidden="true">
-        <div class="envelope">
-          <img class="envelope__img" src="assets/img/hero-envelope.jpg" width="900" height="474" alt="">
-          <!-- 便箋が出てくる枠。封筒の口より下はここでクリップされる -->
-          <div class="envelope__slot">
-            <div class="envelope__letter">
-              <p class="envelope__ttl">御社の中期経営計画、<br>拝読しました。</p>
-              <span class="envelope__rule"></span>
-              <p class="envelope__body">貴社が掲げる省人化と店舗DXの推進について——</p>
-            </div>
-          </div>
-        </div>
+      <div class="hero__visual">
+        <img class="hero__photo" src="assets/img/hero-president.jpg"
+             width="1200" height="800" fetchpriority="high"
+             alt="社長室で、社長が届いた手紙を読んでいる様子">
       </div>
     </div>
 
