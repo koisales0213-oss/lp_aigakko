@@ -422,6 +422,13 @@ strong { font-weight: 700; color: var(--ink); }
   display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .1em;
   background: var(--ink); color: #fff; padding: 5px 12px; border-radius: 5px; margin-bottom: 12px;
 }
+.case__badge {
+  display: inline-block; margin-left: 8px; vertical-align: 1px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .08em;
+  background: #fff; color: var(--ink-mute); border: 1px solid var(--line);
+  padding: 3px 9px; border-radius: 4px;
+}
+.case__disclaimer { display: inline-block; font-size: 12.5px; color: var(--ink-mute); margin-top: 8px; }
 .case__cap { font-size: 13.5px; line-height: 2; }
 .case__note { display: block; font-size: 11.5px; color: var(--ink-mute); margin-top: 10px; }
 
